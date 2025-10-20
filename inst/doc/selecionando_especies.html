@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>2. Selecionar e filtrar espécies</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">2. Selecionar e filtrar espécies</h1>
+
+
+
+<div id="selecionar-uma-lista-de-espécies" class="section level3">
+<h3>Selecionar uma lista de espécies</h3>
+<p>Selecionar uma lista de espécies-alvo é uma tarefa comum em estudos
+macroecológicos e de conservação. Por exemplo, um pesquisador pode
+desejar modelar a distribuição de mamíferos arborícolas que ocorrem em
+um estado específico.</p>
+<p>Aplicando diferentes filtros ao banco de dados, podemos obter uma
+lista verificada das espécies de animais brasileiros para qualquer
+estado brasileiro ou país. Além disso, o filtro pode ser aplicado para
+selecionar espécies por filo, classe, ordem, família, gênero, forma de
+vida, habitat, origem e status taxonômico. Neste tutorial, vamos ver
+como utilizar o pacote <em>faunabr</em> para selecionar uma lista de
+espécies com base nessas características.</p>
+</div>
+<div id="carregando-os-dados" class="section level2">
+<h2>Carregando os dados</h2>
+<p>Antes de começar, utilize a função <code>load_faunabr()</code> para
+carregar os dados. Para informações mais detalhadas sobre como obter e
+carregar os dados, consulte <a href="https://wevertonbio.github.io/faunabr/articles/primeiros_passos.html">Primeiros
+passos com faunabr</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(faunabr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#Carregar dados</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>bf <span class="ot">&lt;-</span> <span class="fu">load_faunabr</span>(<span class="at">data_dir =</span> my_dir, <span class="co">#Pasta onde foi salvo o arquivo com get_faunabr()</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>                   <span class="at">data_version =</span> <span class="st">&quot;latest&quot;</span>, <span class="co">#Versão mais recente</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">&quot;short&quot;</span>) <span class="co">#Versão resumida</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; Loading version 1.3</span></span></code></pre></div>
+<p>Aqui, vamos utilizar os dados baixados em português
+(<code>translate = FALSE</code> em <code>get_faunabr()</code>).</p>
+</div>
+<div id="como-selecionar-uma-lista-de-espécies" class="section level2">
+<h2>Como selecionar uma lista de espécies?</h2>
+<p>Um dos principais objetivos deste pacote é auxiliar na seleção de uma
+lista de espécies com base na classificação taxonômica, características
+e distribuição. Especificamente, você pode filtrar por:</p>
+<ul>
+<li>filo, classe, ordem, família e gênero;</li>
+<li>forma de vida e habitat;</li>
+<li>estados brasileiros e países com ocorrências confirmadas;</li>
+<li>origem;</li>
+<li>status taxonômico.</li>
+</ul>
+<p>Para explorar todas as opções disponíveis para cada filtro, utilize a
+função <code>fauna_attributes()</code> com os atributos desejados. Esta
+função fornecerá uma lista de data.frames com as opções disponíveis para
+usar na função <code>select_fauna()</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#Obter as opções disponíveis para filtrar por forma de vida, habitat e origem</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>fauna_at <span class="ot">&lt;-</span> <span class="fu">fauna_attributes</span>(<span class="at">data =</span> bf,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                             <span class="at">attribute =</span> <span class="fu">c</span>(<span class="st">&quot;lifeForm&quot;</span>, <span class="st">&quot;habitat&quot;</span>, <span class="st">&quot;origin&quot;</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">head</span>(fauna_at<span class="sc">$</span>lifeForm)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;          lifeForm</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1        colonial</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2       comensal</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 3    ectoparasito</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 4 ectoparasitoide</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 5    endoparasito</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 6  endoparasitoide</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="fu">head</span>(fauna_at<span class="sc">$</span>habitat)</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; habitat</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 1          agua_doce</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2 aguas_subterraneas</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 3            arboreo</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 4        cavernicola</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 5          fossorial</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 6         hiporreico</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="fu">head</span>(fauna_at<span class="sc">$</span>origin)</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;         origin</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 1 criptogenica</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 2      exotica</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 3       nativa</span></span></code></pre></div>
+<p>Como exemplo, vamos considerar o cenário em que desejamos obter uma
+lista de todos os insetos arbóreos nativos com ocorrências confirmadas
+no Rio de Janeiro:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>insects_rj <span class="ot">&lt;-</span> <span class="fu">select_fauna</span>(<span class="at">data =</span> bf, <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                           <span class="at">phylum =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">&quot;Insecta&quot;</span>, <span class="co">#Insetos</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                           <span class="at">lifeForm =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_lifeForm =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>                           <span class="at">habitat =</span> <span class="st">&quot;arboreo&quot;</span>, <span class="at">filter_habitat =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                           <span class="at">states =</span> <span class="st">&quot;RJ&quot;</span>, <span class="co">#Rio de Janeiro</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>                           <span class="at">filter_states =</span> <span class="st">&quot;in&quot;</span>, <span class="co">#Que ocorrem NO RJ</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>                           <span class="at">country =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_country =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                           <span class="at">origin =</span> <span class="st">&quot;nativa&quot;</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>                           <span class="at">taxonomicStatus =</span> <span class="st">&quot;valido&quot;</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">nrow</span>(insects_rj)</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; [1] 114</span></span></code></pre></div>
+<p>O filtro retornou 114 espécies que atendem aos critérios
+especificados. É importante notar que essas seleções incluem espécies
+com ocorrências confirmadas no Rio de Janeiro, e algumas delas também
+podem ter ocorrências confirmadas em outros estados.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#Primeiros 7 valores únicos de Estados onde as espécies ocorrem</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">unique</span>(insects_rj<span class="sc">$</span>states)[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;AC;AM;AP;BA;CE;DF;ES;GO;MA;MG;MS;MT;PA;PE;RJ;RN;RO;RR;SE;SP;TO&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; [2] &quot;BA;MA;MG;MT;PR;RJ;RS;SC;SP&quot;                                    </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; [3] &quot;ES;MG;PE;PR;RJ;RS;SP&quot;                                          </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; [4] &quot;ES;PR;RJ;SP&quot;                                                   </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; [5] &quot;RJ&quot;                                                            </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; [6] &quot;RJ;SP&quot;                                                         </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; [7] &quot;ES;MG;RJ;RS;SC;SP&quot; </span></span></code></pre></div>
+<p>Se você deseja selecionar espécies com ocorrências confirmadas apenas
+no Rio de Janeiro, e não em nenhum outro estado, modifique o parâmetro
+<em>filter_state</em> para “only”:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>insects_rj_only <span class="ot">&lt;-</span> <span class="fu">select_fauna</span>(<span class="at">data =</span> bf, <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                           <span class="at">phylum =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">&quot;Insecta&quot;</span>, <span class="co">#Insetos</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                           <span class="at">lifeForm =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_lifeForm =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                           <span class="at">habitat =</span> <span class="st">&quot;arboreo&quot;</span>, <span class="at">filter_habitat =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                           <span class="at">states =</span> <span class="st">&quot;RJ&quot;</span>, <span class="co">#Rio de Janeiro</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>                           <span class="at">filter_states =</span> <span class="st">&quot;only&quot;</span>, <span class="co">#Com ocorrência APENAS no RJ</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                           <span class="at">country =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_country =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>                           <span class="at">origin =</span> <span class="st">&quot;nativa&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>                           <span class="at">taxonomicStatus =</span> <span class="st">&quot;valido&quot;</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="fu">nrow</span>(insects_rj_only)</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; [1] 22</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="fu">unique</span>(insects_rj_only<span class="sc">$</span>states)</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; [1] &quot;RJ&quot;</span></span></code></pre></div>
+<p>Agora, o filtro retornou 22 espécies, todas exclusivamente confinadas
+ao Rio de Janeiro.</p>
+<p>Além disso, o pacote oferece a flexibilidade de combinar vários
+filtros (consulte <code>?select_fauna</code> para mais detalhes). Por
+exemplo, considere o cenário em que desejamos compilar uma lista de
+insetos nativos com ocorrências confirmadas nos estados do Paraná (PR),
+Santa Catarina (SC) e Rio Grande do Sul (RS):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>insects_south <span class="ot">&lt;-</span> <span class="fu">select_fauna</span>(<span class="at">data =</span> bf, <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                           <span class="at">phylum =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">&quot;Insecta&quot;</span>, <span class="co">#Insetos</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>                           <span class="at">lifeForm =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_lifeForm =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                           <span class="at">habitat =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_habitat =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>                           <span class="at">states =</span> <span class="fu">c</span>(<span class="st">&quot;PR&quot;</span>, <span class="st">&quot;SC&quot;</span>, <span class="st">&quot;RS&quot;</span>), <span class="co">#Estados do Sul do Brasil</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>                           <span class="at">filter_states =</span> <span class="st">&quot;in&quot;</span>, <span class="co">#EM qualquer um dos estados</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>                           <span class="at">country =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_country =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>                           <span class="at">origin =</span> <span class="st">&quot;nativa&quot;</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>                           <span class="at">taxonomicStatus =</span> <span class="st">&quot;valido&quot;</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="fu">nrow</span>(insects_south)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; [1] 11461</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#Primeiros 10 valores únicos de Estados onde as espécies ocorrem</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="fu">unique</span>(insects_south<span class="sc">$</span>states)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; [1] &quot;PR;SP&quot; </span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; [2] &quot;BA;MT;RJ;RS&quot; </span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; [3] &quot;RS&quot;   </span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; [4] &quot;PR&quot;   </span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; [5] &quot;PR;RS&quot;  </span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; [6] &quot;GO;PA;RO;RR;SC&quot;</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; [7] &quot;MG;PR;SP&quot;    </span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; [8] &quot;GO;MG;PR;RS;SC&quot;</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; [9] &quot;GO;RJ;SC&quot;       </span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; [10] &quot;AC;AL;AM;AP;BA;CE;DF;ES;GO;MA;MG;MS;MT;PA;PB;PE;PI;PR;RJ;RN;RO;RR;RS;SC;SE;SP;TO&quot;</span></span></code></pre></div>
+<p>Como utilizamos <em>filter_state = “in”</em>, nossa seleção englobou
+espécies que ocorrem nos três estados, mas também aquelas presentes
+apenas em dois ou mesmo em um deles, além de outros estados. Para impor
+um critério mais rigoroso, selecionando apenas as espécies com
+ocorrências confirmadas em todos os três estados, podemos usar
+<em>filter_state = “and”</em>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>insects_south_and <span class="ot">&lt;-</span> <span class="fu">select_fauna</span>(<span class="at">data =</span> bf, <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                           <span class="at">phylum =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">&quot;Insecta&quot;</span>, <span class="co">#Insetos</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                           <span class="at">lifeForm =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_lifeForm =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                           <span class="at">habitat =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_habitat =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>                           <span class="at">states =</span> <span class="fu">c</span>(<span class="st">&quot;PR&quot;</span>, <span class="st">&quot;SC&quot;</span>, <span class="st">&quot;RS&quot;</span>), </span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>                           <span class="at">filter_states =</span> <span class="st">&quot;and&quot;</span>, <span class="co">#PR &amp; SC &amp; RS</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>                           <span class="at">country =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_country =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>                           <span class="at">origin =</span> <span class="st">&quot;nativa&quot;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>                           <span class="at">taxonomicStatus =</span> <span class="st">&quot;valido&quot;</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="fu">nrow</span>(insects_south_and)</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; [1] 1924</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#Primeiros 10 valores únicos de Estados onde as espécies ocorrem</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="fu">unique</span>(insects_south_and<span class="sc">$</span>states)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; [1] &quot;GO;MG;PR;RS;SC&quot;  </span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; [2] &quot;AC;AL;AM;AP;BA;CE;DF;ES;GO;MA;MG;MS;MT;PA;PB;PE;PI;PR;RJ;RN;RO;RR;RS;SC;SE;SP;TO&quot;</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; [3] &quot;AC;AM;MG;MS;MT;PA;PE;PR;RO;RS;SC;SP&quot; </span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt; [4] &quot;AM;BA;CE;DF;ES;GO;MG;MS;MT;PA;PE;PR;RJ;RS;SC;SP&quot; </span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt; [5] &quot;AC;AM;AP;BA;CE;DF;ES;GO;MG;MS;MT;PA;PE;PR;RJ;RO;RR;RS;SC;SE;SP;TO&quot;</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt; [6] &quot;BA;ES;MG;PR;RJ;RS;SC;SP&quot;</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt; [7] &quot;AM;DF;ES;GO;PR;RJ;RR;RS;SC;SP&quot;  </span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt; [8] &quot;ES;GO;MG;PR;RJ;RS;SC;SP&quot;     </span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt; [9] &quot;AC;AM;AP;BA;CE;ES;GO;MA;MG;MT;PA;PR;RJ;RO;RS;SC;SP;TO&quot; </span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt; [10] &quot;GO;MG;MS;PR;RO;RS;SC;SP&quot;</span></span></code></pre></div>
+<p>Agora, nossa seleção consistiu exclusivamente em espécies com
+ocorrências confirmadas em todos os estados especificados. No entanto,
+ao utilizar o argumento <em>“and”</em>, permitimos que o filtro
+incluísse espécies com ocorrências em estados adicionais. Para limitar o
+filtro a espécies com ocorrências confirmadas exclusivamente nos três
+estados, sem ocorrências em outros lugares, podemos usar
+<em>filter_state = “only”</em>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>insects_south_only <span class="ot">&lt;-</span> <span class="fu">select_fauna</span>(<span class="at">data =</span> bf, <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                           <span class="at">phylum =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">&quot;Insecta&quot;</span>, <span class="co">#Insetos</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>                           <span class="at">lifeForm =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_lifeForm =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>                           <span class="at">habitat =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_habitat =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>                           <span class="at">states =</span> <span class="fu">c</span>(<span class="st">&quot;PR&quot;</span>, <span class="st">&quot;SC&quot;</span>, <span class="st">&quot;RS&quot;</span>), </span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>                           <span class="at">filter_states =</span> <span class="st">&quot;only&quot;</span>, <span class="co">#Apenas no PR &amp; SC &amp; RS</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>                           <span class="at">country =</span> <span class="st">&quot;all&quot;</span>, <span class="at">filter_country =</span> <span class="st">&quot;in&quot;</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>                           <span class="at">origin =</span> <span class="st">&quot;nativa&quot;</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>                           <span class="at">taxonomicStatus =</span> <span class="st">&quot;valido&quot;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="fu">nrow</span>(insects_south_only)</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; [1] 134</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#Valor único de Estados onde as espécies ocorrem</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="fu">unique</span>(insects_south_only<span class="sc">$</span>states)</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; [1] &quot;PR;RS;SC&quot;</span></span></code></pre></div>
+<p>Agora, o filtro retornou apenas 134 espécies, todas ocorrendo em PR,
+SC e RS; sem registros de ocorrências em qualquer outro estado.</p>
+</div>
+<div id="checagem-de-nomes-científicos-e-subseleção-de-espécies" class="section level2">
+<h2>Checagem de nomes científicos e subseleção de espécies</h2>
+<div id="extraindo-o-nome-binomial" class="section level3">
+<h3>Extraindo o nome binomial</h3>
+<p>Além de selecionar uma lista de espécies com base em suas
+características, o pacote também inclui uma função para subselecionar
+espécies por nome. A função funciona exclusivamente com nomes binomiais
+(Gênero + Epíteto específico), como <em>Panthera onca</em>, e não
+funciona com nomes científicos completos (incluindo Autor ou Epíteto
+infraespecífico), como <em>Panthera onca (Linnaeus, 1758)</em>.</p>
+<p>Se você tiver uma lista de espécies com nomes científicos completos,
+pode extrair os nomes binomiais usando a função
+<code>get_binomial()</code>. Não se preocupe com espaços excessivos
+entre as palavras, a função removerá quaisquer espaços extras dos
+nomes.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>complete_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Pantera onca (Linnaeus, 1758)&quot;</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                    <span class="st">&quot;Zonotrichia capensis subtorquata Swainson, 1837&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                    <span class="st">&quot;Mazama bororo Duarte, 1996&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                    <span class="st">&quot;Mazama jucunda Thomas, 1913&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>                    <span class="st">&quot;Arrenurus tumulosus intercursor&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>                    <span class="st">&quot;Araucaria angustifolia&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#Panthera onca com erros de digitação para ilustrar como a próxima função os corrige</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#Araucaria angustifolia (uma planta) foi usada apenas como um exemplo que será utilizado para ilustrar a próxima função</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>binomial_names <span class="ot">&lt;-</span> <span class="fu">extract_binomial</span>(<span class="at">species_names =</span> complete_names)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>binomial_names</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Pantera onca&quot;                         &quot;Zonotrichia capensis&quot; </span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Mazama bororo&quot;                        &quot;Mazama jucunda&quot; </span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Arrenurus tumulosus&quot;                  &quot;Araucaria angustifolia&quot; </span></span></code></pre></div>
+</div>
+<div id="checando-se-os-nomes-das-espécies-estão-corretos" class="section level3">
+<h3>Checando se os nomes das espécies estão corretos</h3>
+<p>Vamos agora verificar a ortografia, o status nomenclatural e o status
+taxonômico dos nomes das espécies usando a função
+<code>check_fauna_names()</code>. Se a função não conseguir localizar o
+nome de uma espécie no banco de dados (devido a um erro tipográfico, por
+exemplo), ela pode sugerir nomes potenciais com base em similaridades
+com outras entradas no banco de dados. Para ver como a função funciona,
+vamos utilizar o dataset <em>binomial_names</em> criado
+anteriormente:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#Checar nomes</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>checked_names <span class="ot">&lt;-</span> <span class="fu">check_fauna_names</span>(<span class="at">data =</span> bf, </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                             <span class="at">species =</span> binomial_names,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                             <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>                             <span class="at">max_distance =</span> <span class="fl">0.1</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(checked_names) <span class="co">#Exibir tabela como tibble</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 9</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;   input_name               Spelling           Suggested_name       Distance taxonomicStatus nomenclaturalStatus validName   family        matches</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                    &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;               &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;  </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 1 &quot;Zonotrichia capensis&quot;   Correct            Zonotrichia capensis        0 valido    NA                  NA             Passerellidae single </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 2 &quot;Mazama bororo&quot;          Correct            Mazama bororo               0 sinonimo        NA                  Mazama jucunda Cervidae      single </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; 3 &quot;Mazama jucunda&quot;         Correct            Mazama jucunda              0 valido     NA                  NA             Cervidae      single </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 4 &quot;Arrenurus tumulosus&quot;    Correct            Arrenurus tumulosus         0 valido     NA                  NA             Arrenuridae   single </span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; 5 &quot;Pantera onca&quot;           Probably_incorrect Panthera onca               2 valido     NA                  NA             Felidae       single </span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; 6 &quot;Araucaria angustifolia&quot; Not_found          NA                         NA NA              NA                  NA             NA            none   </span></span></code></pre></div>
+<p>Podemos ver que <em>Zonotrichia capensis</em>, <em>Mazama
+jucunda</em> e <em>Arrenurus tumulosus</em> estão escritos corretamente
+e são nomes validos. <em>Mazama bororo</em> está escrito corretamente,
+mas é um sinônimo de <em>Mazama jucunda</em>. No caso de <em>Pantera
+onca</em>, a ortografia parece estar potencialmente incorreta (já que o
+nome não foi encontrado no banco de dados); no entanto, um nome
+semelhante, <em>Panthera onca</em>, é sugerido pela função. A coluna
+‘Distance’ indica a distância de edição de Levenshtein entre a entrada e
+o nome sugerido. <em>Araucaria angustifolia</em> foi marcada como
+Not_found (como esperado, dado que <em>Araucaria angustifolia</em> não é
+um animal!). Consequentemente, o nome não foi localizado no banco de
+dados e não havia nomes comparáveis disponíveis.</p>
+</div>
+<div id="subselecionando-espécies" class="section level3">
+<h3>Subselecionando espécies</h3>
+<p>Para obter informações sobre espécies do banco de dados Fauna do
+Brasil a partir de uma lista de espécies pré-definida, utilize a função
+<code>subset_species()</code>. Para obter um desempenho ideal,
+recomendamos fortemente o uso das funções <code>get_binomial()</code> e
+<code>check_names()</code> previamente. Isso garante que você esteja
+trabalhando exclusivamente com espécies presentes no banco de dados da
+Fauna do Brasil. Para ver como a função funciona, vamos usar os nomes
+validos em <em>checked_names</em> criados anteriormente:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Obter apenas nomes validos</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>valids <span class="ot">&lt;-</span> <span class="fu">unique</span>(checked_names<span class="sc">$</span>validName)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>valids <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(valids) <span class="co">#Remove NAs</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#Subselecionar especies</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>my_sp <span class="ot">&lt;-</span> <span class="fu">subset_fauna</span>(<span class="at">data =</span> bf, <span class="at">species =</span> valids,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>                      <span class="at">include_subspecies =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(my_sp)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co"># A tibble: 4 x 21</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt;   species           subspecies scientificName validName kingdom phylum class order family genus lifeForm habitat states countryCode origin</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt; </span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; 1 Panthera onca     NA         Panthera onca~ NA           Animal~ Chord~ Mamm~ Carn~ Felid~ Pant~ &quot;vida_l~ &quot;terre~ AC;AM~ AR;BO;BR;B~ nativa</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; 2 Arrenurus tumulo~ NA         Arrenurus (In~ NA           Animal~ Arthr~ Arac~ Trom~ Arren~ Arre~ &quot;&quot;       &quot;&quot;      NA     NA          NA    </span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; 3 Mazama jucunda    NA         Mazama jucund~ NA           Animal~ Chord~ Mamm~ Arti~ Cervi~ Maza~ &quot;herbiv~ &quot;terre~ BA;ES~ BR          nativa</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; 4 Zonotrichia cape~ NA         Zonotrichia c~ NA           Animal~ Chord~ Aves  Pass~ Passe~ Zono~ &quot;&quot;       &quot;&quot;      NA     NA          nativa  </span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co"># i 5 more variables: nomenclaturalStatus &lt;chr&gt;, vernacularName &lt;chr&gt;, taxonRank &lt;chr&gt;, id &lt;int&gt;, language &lt;chr&gt;</span></span></code></pre></div>
+<p>Também podemos incluir subespécies e/ou variedades:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>my_sp2 <span class="ot">&lt;-</span> <span class="fu">subset_fauna</span>(<span class="at">data =</span> bf, <span class="at">species =</span> valids,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>                      <span class="at">include_subspecies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(my_sp2) <span class="co">#print data.frame as tibble</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 19</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;    species      subspecies scientificName validName kingdom phylum class order family genus lifeForm habitat states countryCode #&gt; origin</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       #&gt; &lt;chr&gt; </span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  1 Panthera on… &quot;&quot;         Panthera onca… &quot;&quot;           Animal… Chord… Mamm… Carn… Felid… Pant… &quot;free_l… &quot;terre… AC;AM… argentina;… #&gt; &quot;nati…</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  2 Arrenurus (… &quot;&quot;         Arrenurus (In… &quot;&quot;           Animal… Arthr… Arac… Trom… Arren… Arre… &quot;&quot;       &quot;&quot;      NA     brazil      &quot;&quot; #&gt;    </span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  3 Arrenurus (… &quot;Arrenuru… Arrenurus (In… &quot;&quot;           Animal… Arthr… Arac… Trom… Arren… Arre… &quot;&quot;       &quot;&quot;      NA     brazil      &quot;&quot; #&gt;    </span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  4 Arrenurus (… &quot;Arrenuru… Arrenurus (In… &quot;&quot;           Animal… Arthr… Arac… Trom… Arren… Arre… &quot;&quot;       &quot;&quot;      NA     brazil      &quot;&quot; #&gt;    </span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  5 Mazama jucu… &quot;&quot;         Mazama jucund… &quot;&quot;           Animal… Chord… Mamm… Arti… Cervi… Maza… &quot;herbiv… &quot;terre… BA;ES… brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  6 Zonotrichia… &quot;&quot;         Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      AL;AP… brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;  7 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      AP     brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;  8 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      RR     brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;  9 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      RR     brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; 10 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      BA;MA… brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; 11 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      PA     brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; 12 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      AP;PA… brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt; 13 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      ES;MG… brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt; 14 Zonotrichia… &quot;Zonotric… Zonotrichia c… &quot;&quot;           Animal… Chord… Aves  Pass… Passe… Zono… &quot;free_l… &quot;&quot;      TO     brazil      #&gt; &quot;nati…</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 more variables: taxonomicStatus &lt;chr&gt;, nomenclaturalStatus &lt;chr&gt;, vernacularName &lt;chr&gt;, taxonRank &lt;chr&gt;</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+</div>
+<div id="obtendo-sinônimos" class="section level3">
+<h3>Obtendo sinônimos</h3>
+<p>Podemos obter todos os sinônimos de uma lista de espécies. Isso pode
+ser particularmente útil, por exemplo, ao buscar registros de uma
+espécie e todos os seus sinônimos (conforme listado na Fauna do Brasil)
+em bancos de dados online como o GBIF. Para isso, utilize a função
+<code>fauna_synonym()</code>. Como exemplo, vamos buscar os sinônimos de
+três espécies:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>spp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Panthera onca&quot;</span>, <span class="st">&quot;Mazama jucunda&quot;</span>, <span class="st">&quot;Subulo gouzoubira&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>spp_syn <span class="ot">&lt;-</span> <span class="fu">fauna_synonym</span>(<span class="at">data =</span> bf, <span class="at">species =</span> spp)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>spp_syn</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;               validName               synonym   taxonomicStatus</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; 49343     Panthera onca                  &lt;NA&gt;    valido</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; 60523    Mazama jucunda         Mazama bororo    sinonimo</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; 61168 Subulo gouzoubira    Mazama gouazoubira    sinonimo</span></span></code></pre></div>
+<p>Podemos ver que <em>Mazama jucunda</em> possui o sinônimo <em>Mazama
+bororo</em>; enquanto <em>Subulo gouzoubira</em> possui o sinônimo
+<em>Mazama gouazoubira</em>. <em>Panthera onca</em> não possui nenhum
+sinônimo listado na base de dados.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

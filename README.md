@@ -1,0 +1,121 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# faunabr <img src="man/figures/logo.png" align="right" width="20%" height="20%"/>
+
+<!-- badges: start -->
+
+[![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![R-CMD-check](https://github.com/wevertonbio/faunabr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wevertonbio/faunabr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+The [Catálogo Taxonômico da Fauna do Brasil](http://fauna.jbrj.gov.br/fauna) is the result of the collaborative efforts of over 500 zoologists, each specializing in various animal groups native to Brazil. This comprehensive database offers detailed and standardized ecological descriptions, nomenclatural information, geographic distribution, and identification keys for both native and non-native animals found in Brazil.
+
+The faunabr package provides a suite of functions designed to retrieve, filter, and spatialize data from the Fauna do Brasil dataset.
+
+## Overview of functions
+
+### Download and import Fauna do Brasil Dataset
+
+- `fauna_version()`: Check if you have the latest version of Fauna do
+  Brasil dataset available.
+- `get_faunabr()`: Download the latest version of Fauna do Brasil
+  database.
+- `load_faunabr()`: Load Fauna do Brasil database.
+
+### Check names
+
+- `check_fauna_names()`: Check species names.
+- `extract_binomial()`: Extract the binomial name (Genus + specific epithet)
+  from a complete Scientific Name.
+- `fauna_synonym()`: Retrieve synonyms for species.
+
+### Select or subset species
+
+- `fauna_attributes()`: Get available attributes to filter species.
+- `fauna_by_vernacular()`: Search for taxa using vernacular names/common names.
+- `select_fauna()`: Select species based on its characteristics and
+  distribution.
+- `subset_fauna()`: Extract a subset of species from Fauna do Brasil database.
+
+### Spatialize distribution and use Fauna do Brasil to flag records
+
+- `fauna_pam()`: Get a presence-absence matrix of species based on its 
+distribution in brazilian states and/or countries
+- `filter_faunabr()`: Identify records outside natural ranges according
+  to Fauna do Brasil.
+- `fauna_spat_occ()`: Get Spatial polygons (SpatVectors) of species based
+  on its distribution (States and countries) according to Fauna do Brasil
+
+## Installation
+
+### Install development version from GitHub
+
+You can install the development version of faunabr from
+[GitHub](https://github.com/wevertonbio/faunabr) with:
+
+``` r
+if(!require(remotes)){
+    install.packages("remotes")
+}
+
+if(!require(faunabr)){
+remotes::install_github('wevertonbio/faunabr')}
+
+library(faunabr)
+```
+
+Before downloading the data available in the Fauna do Brasil, we need to
+create a folder to save the data:
+
+``` r
+#Creating a folder in a temporary directory
+#Replace 'file.path(tempdir(), "faunabr")' by a path folder to be create in your computer
+my_dir <- file.path(file.path(tempdir(), "faunabr"))
+dir.create(my_dir)
+```
+
+You can now utilize the `get_faunabr` function to retrieve the most recent 
+version of the data:
+
+``` r
+get_faunabr(output_dir = my_dir, #directory to save the data
+            data_version = "latest", #get the most recent version available
+            overwrite = T) #Overwrite data, if it exists
+```
+
+You also have the option to download an older, specific version of the Fauna do 
+Brasil dataset. To explore the available versions, please refer to
+[this link](https://ipt.jbrj.gov.br/jbrj/resource?r=catalogo_taxonomico_da_fauna_do_brasil).
+For downloading a particular version, simply replace ‘latest’ with the
+desired version number. For example:
+
+``` r
+get_faunabr(output_dir = my_dir, #directory to save the data
+            data_version = "1.10", #Version 1.10, published on 2024-02-01
+            overwrite = T) #Overwrite data, if it exists
+```
+
+## Loading data
+
+In order to use the other functions of the package, you need to load the
+data into your environment. To achieve this, utilize the `load_faunabr()` 
+function. By default, the function will automatically search for the latest 
+available version in your directory. However, you have the option to specify a 
+particular version using the *data_version* parameter. Additionally, you can 
+choose between two versions of the data: the ‘short’ version (containing the 19
+columns required for run the other functions of the package) or the ‘complete’ 
+version (with all original 31 columns). The function imports the ‘short’ version
+by default.
+
+``` r
+#Load the short version
+bf <- load_fauna(data_dir = my_dir,
+                   data_version = "latest",
+                   type = "short") #short
+```
+
+## Package website
+
+See the package website (<https://wevertonbio.github.io/faunabr/>) for
+further functions explanation and vignettes.

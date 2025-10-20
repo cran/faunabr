@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>1. Getting started with faunabr</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">1. Getting started with faunabr</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<div id="what-is-fauna-do-brasil" class="section level3">
+<h3>What is Fauna do Brasil?</h3>
+<p>The <a href="http://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da
+Fauna do Brasil</a> is the result of the collaborative efforts of over
+500 zoologists, each specializing in various animal groups native to
+Brazil. This comprehensive database offers detailed and standardized
+morphological descriptions, nomenclatural information, geographic
+distribution, and identification keys for both native and non-native
+animals found in Brazil.</p>
+<p>The faunabr package provides a suite of functions designed to
+retrieve, filter, and spatialize data from the Fauna do Brasil
+dataset.</p>
+</div>
+</div>
+<div id="overview-of-the-functions" class="section level2">
+<h2>Overview of the functions:</h2>
+<ul>
+<li><code>get_faunabr()</code>: download the latest or an older version
+of Fauna do Brasil database.</li>
+<li><code>fauna_version()</code>: check if you have the latest version
+of Fauna do Brasil data available in a directory.</li>
+<li><code>load_faunabr()</code>: load Fauna do Brasil database.</li>
+<li><code>translate_faunabr()</code>: translates information in the
+“lifeForm”, “origin”, “habitat”, “taxonRank” and “taxonomicStatus”
+columns between Portuguese and English.</li>
+<li><code>fauna_attributes()</code>: display all the options available
+to filter species by its characteristics.</li>
+<li><code>select_fauna()</code>: filter species based on its
+characteristics and distribution.</li>
+<li><code>extract_binomial()</code>: extract the binomial name (Genus +
+specific epithet) from a Scientific Name.</li>
+<li><code>fauna_synonym()</code>: Retrieve synonyms for species.</li>
+<li><code>check_fauna_names()</code>: check if the species names are
+correct.</li>
+<li><code>subset_fauna()</code>: subset a list of species from Fauna do
+Brasil.</li>
+<li><code>fauna_spat_occ()</code>: get Spatial polygons (SpatVectors) of
+species based on its distribution.</li>
+<li><code>filter_faunabr()</code>: removes or flags records outside of
+the species’ natural ranges.</li>
+<li><code>fauna_pam()</code>: get a presence-absence matrix of species
+based on its distribution.</li>
+</ul>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<div id="install-development-version-from-github" class="section level3">
+<h3>Install development version from GitHub</h3>
+<p>You can install the released version of <em>faunabr</em> from <a href="https://github.com/wevertonbio/faunabr">github</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(remotes)){</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(faunabr)){</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&#39;wevertonbio/faunabr&#39;</span>)}</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(faunabr)</span></code></pre></div>
+</div>
+</div>
+<div id="get-data-from-fauna-do-brasil" class="section level2">
+<h2>Get data from Fauna do Brasil</h2>
+<p>All data included in the Fauna do Brasil (i.e., nomenclature, life
+form, and distribution) are stored in Darwin Core Archive data sets,
+which is updated often. Before downloading the data available in the
+Fauna do Brasil, we need to create a folder to save the data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#Creating a folder in a temporary directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#Replace &#39;file.path(tempdir(), &quot;faunabr&quot;)&#39; by a path folder to be create in </span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#your computer</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>my_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;faunabr&quot;</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">dir.create</span>(my_dir)</span></code></pre></div>
+<p>You can now utilize the <code>get_faunabr</code> function to retrieve
+the most recent version of the data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">get_faunabr</span>(<span class="at">output_dir =</span> my_dir, <span class="co">#directory to save the data</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>            <span class="at">data_version =</span> <span class="st">&quot;latest&quot;</span>, <span class="co">#get the most recent version available</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>            <span class="at">translate =</span> <span class="cn">TRUE</span>, <span class="co">#translate data to English</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>            <span class="at">overwrite =</span> T) <span class="co">#Overwrite data, if it exists</span></span></code></pre></div>
+<p>The function will take a few seconds to download the data and a few
+minutes to merge the datasets into a single data.frame. Upon successful
+completion, you will find a folder named with the version of Fauna do
+Brasil. This folder contains the downloaded raw dataset (TXT files in
+Portuguese) and a file named <strong>CompleteBrazilianFauna.gz</strong>.
+The latter represents the finalized dataset. By default, the data is
+translated into English, but you can keep the original Portuguese
+version by setting <code>translate = FALSE</code>.</p>
+<p>You also have the option to download an older, specific version of
+the Fauna do Brasil dataset. To explore the available versions, please
+refer to <a href="https://ipt.jbrj.gov.br/jbrj/resource?r=catalogo_taxonomico_da_fauna_do_brasil">this
+link</a>. For downloading a particular version, simply replace ‘latest’
+with the desired version number. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">get_faunabr</span>(<span class="at">output_dir =</span> my_dir, <span class="co">#directory to save the data</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>            <span class="at">data_version =</span> <span class="st">&quot;1.10&quot;</span>, <span class="co">#Version 1.10, published on 2024-02-01</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>            <span class="at">overwrite =</span> T) <span class="co">#Overwrite data, if it exists</span></span></code></pre></div>
+<p>As previously mentioned, you will find a folder named ‘1.10’ within
+the designated directory.</p>
+<p>To view the available versions in your specified directory, run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">fauna_version</span>(<span class="at">data_dir =</span> my_dir)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; You have the following versions of Fauna do Brasil:</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;  1.17</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;  1.10</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;  It includes the latest version:  1.17</span></span></code></pre></div>
+</div>
+<div id="loading-the-data" class="section level2">
+<h2>Loading the data</h2>
+<p>In order to use the other functions of the package, you need to load
+the data into your environment. To achieve this, utilize the
+<code>load_faunabr()</code> function. By default, the function will
+automatically search for the latest available version in your directory.
+However, you have the option to specify a particular version using the
+<em>data_version</em> parameter. Additionally, you can choose between
+two versions of the data: the ‘short’ version (containing the 19 columns
+required for run the other functions of the package) or the ‘complete’
+version (with all original 31 columns). The function imports the ‘short’
+version by default.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#Short version</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>bf <span class="ot">&lt;-</span> <span class="fu">load_faunabr</span>(<span class="at">data_dir =</span> my_dir,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                   <span class="at">data_version =</span> <span class="st">&quot;latest&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">&quot;short&quot;</span>) <span class="co">#short</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; Loading version 393.401</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">colnames</span>(bf) <span class="co">#See variables from short version</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;species&quot;             &quot;subspecies&quot;          &quot;scientificName&quot;       </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;validName&quot;           &quot;kingdom&quot;             &quot;phylum&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;class&quot;               &quot;order&quot;               &quot;family&quot; </span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; [10] &quot;genus&quot;               &quot;lifeForm&quot;            &quot;habitat&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; [13] &quot;states&quot;              &quot;countryCode&quot;         &quot;origin&quot; </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; [16] &quot;taxonomicStatus&quot;     &quot;nomenclaturalStatus&quot; &quot;vernacularName&quot;          </span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; [19] &quot;taxonRank&quot;           &quot;id&quot;                  &quot;language&quot;</span></span></code></pre></div>
+<p>Note that the complete version has 12 more columns:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#Complete version</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>bf_complete <span class="ot">&lt;-</span> <span class="fu">load_faunabr</span>(<span class="at">data_dir =</span> my_dir,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                   <span class="at">data_version =</span> <span class="st">&quot;latest&quot;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">&quot;complete&quot;</span>) <span class="co">#complete</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="fu">colnames</span>(bf_complete) <span class="co">#See variables from complete version</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;id&quot;                       &quot;taxonID&quot;                 </span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;species&quot;                  &quot;subspecies&quot;       </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;scientificName&quot;           &quot;validName&quot;                   </span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;validNameUsage&quot;           &quot;parentNameUsage&quot;                             </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;namePublishedInYear&quot;      &quot;higherClassification&quot;      </span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; [11] &quot;kingdom&quot;                  &quot;phylum&quot;                                   </span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; [13] &quot;class&quot;                    &quot;order&quot;                                   </span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; [15] &quot;family&quot;                   &quot;genus&quot;               </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; [17] &quot;specificEpithet&quot;          &quot;infraspecificEpithet&quot;</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; [19] &quot;taxonRank&quot;                &quot;scientificNameAuthorship&quot;                  </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; [21] &quot;taxonomicStatus&quot;          &quot;nomenclaturalStatus&quot; </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; [23] &quot;vernacularName&quot;           &quot;lifeForm&quot;      </span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; [25] &quot;habitat&quot;                  &quot;origin&quot;</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; [27] &quot;states&quot;                   &quot;countryCode&quot;    </span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; [29] &quot;modified&quot;                 &quot;bibliographicCitation&quot;                              </span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt; [31] &quot;relationshipOfResource&quot;   &quot;language&quot;                             </span></span></code></pre></div>
+<div id="translate-information" class="section level3">
+<h3>Translate information</h3>
+<p>By default, the data downloaded from <a href="http://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da Fauna do
+Brasil</a> is translated into English, unless you set
+<code>translate = FALSE</code> in <code>get_faunabr()</code> function.
+However, you can use the <code>translate_faunabr()</code> function to
+translate the loaded data between English and Portuguese:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#Translate from English to Portuguese</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>bf_portuguese <span class="ot">&lt;-</span> <span class="fu">translate_faunabr</span>(<span class="at">data =</span> bf, <span class="at">to =</span> <span class="st">&quot;pt_br&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># See lifeforms (in portuguese)</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">fauna_attributes</span>(bf_portuguese, <span class="st">&quot;lifeForm&quot;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;  $lifeForm</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;                 lifeForm</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 1               colonial</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 2               comensal</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 3           ectoparasito</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 4        ectoparasitoide</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 5           endoparasito</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 6        endoparasitoide</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 7              epibionte</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; 8              eussocial</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; 9              herbivoro</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; 10      hiperparasitoide</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; 11             inquilino</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; 12                mutual</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; 13           polinizador</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 14              predador</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; 15                sessil</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; 16 vida_livre_individual</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#Translate from Portuguese to English</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>bf_english <span class="ot">&lt;-</span> <span class="fu">translate_faunabr</span>(<span class="at">data =</span> fauna_portuguese, <span class="at">to =</span> <span class="st">&quot;en&quot;</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#See life forms(in English)</span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="fu">fauna_attributes</span>(bf_english, <span class="st">&quot;lifeForm&quot;</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt;  $lifeForm</span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt;                  lifeForm</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="co">#&gt; 1                colonial</span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">#&gt; 2               commensal</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="co">#&gt; 3            ectoparasite</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="co">#&gt; 4          ectoparasitoid</span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a><span class="co">#&gt; 5            endoparasite</span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="co">#&gt; 6          endoparasitoid</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; 7                epibiont</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; 8                eusocial</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt; 9  free_living_individual</span></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt; 10              herbivore</span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt; 11        hyperparasitoid</span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt; 12              inquiline</span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt; 13            mutualistic</span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt; 14              polynizer</span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt; 15               predator</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt; 16                sessile</span></span></code></pre></div>
+</div>
+</div>
+<div id="save-data" class="section level2">
+<h2>Save data</h2>
+<p>If you want to save the datasets to open with an external editor
+(e.g. Excel), you can save the data.frame as a CSV file:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">x =</span> bf,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>          <span class="at">file =</span> <span class="fu">file.path</span>(my_dir, <span class="st">&quot;BrazilianFauna.csv&quot;</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>          <span class="at">row.names =</span> F)</span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
