@@ -5,13 +5,19 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/faunabr)](https://CRAN.R-project.org/package=faunabr)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/faunabr)](https://cranlogs.r-pkg.org:443/badges/grand-total/faunabr)
 [![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![R-CMD-check](https://github.com/wevertonbio/faunabr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wevertonbio/faunabr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The [Catálogo Taxonômico da Fauna do Brasil](http://fauna.jbrj.gov.br/fauna) is the result of the collaborative efforts of over 500 zoologists, each specializing in various animal groups native to Brazil. This comprehensive database offers detailed and standardized ecological descriptions, nomenclatural information, geographic distribution, and identification keys for both native and non-native animals found in Brazil.
+The [Catálogo Taxonômico da Fauna do Brasil](https://fauna.jbrj.gov.br/fauna) is the result of the collaborative efforts of over 500 zoologists, each specializing in various animal groups native to Brazil. This comprehensive database offers detailed and standardized ecological descriptions, nomenclatural information, geographic distribution, and identification keys for both native and non-native animals found in Brazil.
 
 The faunabr package provides a suite of functions designed to retrieve, filter, and spatialize data from the Fauna do Brasil dataset.
+
+## Package citation
+Trindade, W. C. F. (2025). faunabr: An R package to explore taxonomic data and map species distributions using the Catálogo Taxonômico da Fauna do Brasil. Zoologia (Curitiba), 42, e25027. [https://doi.org/10.1590/s1984-4689.v42.e25027](https://doi.org/10.1590/s1984-4689.v42.e25027).
 
 ## Overview of functions
 
@@ -48,6 +54,16 @@ distribution in brazilian states and/or countries
   on its distribution (States and countries) according to Fauna do Brasil
 
 ## Installation
+
+### Install stable version from CRAN
+
+To install the stable version of `faunabr` use:
+
+``` r
+install.packages("faunabr")
+```
+
+<br>
 
 ### Install development version from GitHub
 

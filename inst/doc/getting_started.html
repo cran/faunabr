@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,7 +61,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -344,7 +345,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Introduction</h2>
 <div id="what-is-fauna-do-brasil" class="section level3">
 <h3>What is Fauna do Brasil?</h3>
-<p>The <a href="http://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da
+<p>The <a href="https://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da
 Fauna do Brasil</a> is the result of the collaborative efforts of over
 500 zoologists, each specializing in various animal groups native to
 Brazil. This comprehensive database offers detailed and standardized
@@ -493,7 +494,7 @@ version by default.</p>
 <span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt; [31] &quot;relationshipOfResource&quot;   &quot;language&quot;                             </span></span></code></pre></div>
 <div id="translate-information" class="section level3">
 <h3>Translate information</h3>
-<p>By default, the data downloaded from <a href="http://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da Fauna do
+<p>By default, the data downloaded from <a href="https://fauna.jbrj.gov.br/fauna">Catálogo Taxonômico da Fauna do
 Brasil</a> is translated into English, unless you set
 <code>translate = FALSE</code> in <code>get_faunabr()</code> function.
 However, you can use the <code>translate_faunabr()</code> function to
